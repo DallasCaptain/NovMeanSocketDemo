@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socket FUN</title>
+    <script src='/socket.io/socket.io.js'></script>
+    
+</head>
+<body>
+    <style>
+        #colorbox{
+            background-color: grey;
+            display: inline-block;
+            min-width: 75vw;
+            min-height: 50vh;
+    
+        }
+    </style>
+
+
+    <h1>Welcome to the Demo</h1>
+    <button id='redb'>Red</button><button id='blueb'>Blue</button><button id='greenb'>Green</button>
+
+    <div id='colorbox'></div>
+
+    <script>
+        const socket = io();
+        socket.on('welcome', (data)=>{
+            console.log('welcome message from server: ', data)
+        })
+
+        socket.on('message',(data)=>{
+            console.log('message from server:', data)
+        })
+
+        socket.on('color',(color)=>{
+            document.getElementById('colorbox').style.backgroundColor = color
+        })
+
+        document.getElementById('redb').addEventListener('click', ()=>{
+            console.log('red clicked')
+            socket.emit('color','red')
+        })
+        document.getElementById('blueb').addEventListener('click', ()=>{
+            console.log('blue clicked')
+            socket.emit('color','blue')
+        })
+        document.getElementById('greenb').addEventListener('click', ()=>{
+            console.log('green clicked')
+            socket.emit('color','green')
+        })
+
+    </script>
+</body>
+</html>
